@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+  falcon_for_ptt_word:
+    build: .
+    image: falcon_for_ptt_word
+    ports:
+      - 8976:80
+    volumes:
+      - ./board_data:/data
