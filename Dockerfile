@@ -1,4 +1,5 @@
 FROM python:3.8.0-alpine3.10
+ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt /tmp/
 
