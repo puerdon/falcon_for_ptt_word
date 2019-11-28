@@ -57,14 +57,15 @@ class PTTWordResource(object):
             if pos is None:  # client沒有輸入pos
                 result = {
                     "result": 1,
-                    "freq": result
+                    "freq": {k: v / get_year_total_freq(year=year) for k, v in result.items()}
                 }
+
                 resp.body = json.dumps(result, ensure_ascii=False)
             else:   # cline有輸入pos
                 try:    # 檢查該pos是否存在
                     result = {
                     "result": 1,
-                    "freq": result[pos]
+                    "freq": result[pos] / get_year_total_freq(year=year)
                     }
                 except KeyError:
                     available_pos = [f"<{p}>" for p in result.keys()]
@@ -74,3 +75,8 @@ class PTTWordResource(object):
                     }
                 finally:
                     resp.body = json.dumps(result, ensure_ascii=False)
+
+def get_year_total_freq(year=None):
+    with open(f"/data/sum_by_year.json", "r") as f:
+            d = json.load(f)
+    return d[year]
